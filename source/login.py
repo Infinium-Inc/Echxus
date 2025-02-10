@@ -253,7 +253,7 @@ class RegisterPage(CTkFrame):
 
         unique = Key()
 
-        SQL_CURSOR.execute("INSERT INTO Users (username, name, password, seed) VALUES (?, ENCRYPT(?), ENCRYPT(?), ENCRYPT(?))", (username, name, password, str(unique.seed)))
+        SQL_CURSOR.execute("INSERT INTO Users (username, name, password, seed) VALUES (?, ENCRYPT(?), ENCRYPT(?), ?)", (username, name, password, str(unique.seed)))
         SQL.commit()
 
         page.parent.finish(username)
