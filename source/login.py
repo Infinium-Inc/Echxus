@@ -56,8 +56,8 @@ class AuthPage(CTkTabview):
             text_color="#878787",
         )
 
-        page.add("Register")
         page.add("Login")
+        page.add("Register")
 
         page.registerPage = RegisterPage(page.tab("Register"), page)
         page.registerPage.pack(fill="both", expand=True)
