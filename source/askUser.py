@@ -24,7 +24,6 @@ def getAvailable(user) -> set[str]:
 
     return users
 
-
 class Ask(CTkToplevel):
 
     def __init__(branch, username) -> None:
@@ -43,6 +42,7 @@ class Ask(CTkToplevel):
         change_border_color(branch, "#202020")
 
         branch.searchVar = StringVar()
+        branch.searchVar.trace_add("write", lambda *args: branch.update_user_list())
         branch.searchBar = CTkEntry(
             branch,
             fg_color="#2c2c2c",
@@ -56,18 +56,26 @@ class Ask(CTkToplevel):
         branch.userList = CTkScrollableFrame(branch, fg_color="#3a3a3a")
         branch.userList.place(relx=0.5, rely=0.575, anchor="center", relwidth=0.9, relheight=0.75)
 
-        for i in available:
-            branch.userArray.append(
-                CTkButton(
+        branch.available = available
+        branch.update_user_list()
+
+    def update_user_list(branch):
+        search_query = branch.searchVar.get().lower()
+        for widget in branch.userList.winfo_children():
+            widget.destroy()
+        branch.userArray.clear()
+        for i in branch.available:
+            if search_query in i.lower():
+                button = CTkButton(
                     branch.userList,
                     fg_color="#373737",
                     text=i,
                     hover_color="#808080",
                     font=("JetBrains Mono Medium", 20),
-                    command=lambda: branch.set(i)
+                    command=lambda i=i: branch.set(i)
                 )
-            )
-            branch.userArray[-1].pack(pady=5, fill="x", padx=2)
+                branch.userArray.append(button)
+                button.pack(pady=5, fill="x", padx=2)
 
     def set(branch, setter) -> None:
         branch.out.set(setter)
