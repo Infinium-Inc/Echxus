@@ -44,7 +44,7 @@ def get_messages(chat: str, password: str) -> list[str]:
             i[2],
             Key(seed=seed2 if i[1] == user1 else seed1)
         )
-        array += [f"[{i[0]}] {i[1]}: {message}"]
+        array += [i[0], i[1], message]
 
     return array
 
