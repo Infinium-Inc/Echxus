@@ -27,13 +27,27 @@ def get_messages(chat: str, password: str) -> list[str]:
     if password != decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (user1, )).fetchone()[2], GLOBAL_KEY) and password != decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (user2, )).fetchone()[2], GLOBAL_KEY):
         return []
 
+    def toDate(total: str) -> datetime:
+        item = total[0].split(" ")
+        date = item[0].split("-")
+        time = item[1].split(":")
+        hour = time[0]
+        time = time[1].split(".")
+        return datetime(
+            year=int(date[0]),
+            month=int(date[1]),
+            day=int(date[2]),
+            hour=int(hour),
+            minute=int(time[0]),
+            second=int(time[1]),
+        )
+
     query = """
     SELECT * FROM Messages
     WHERE (from_ = ? AND to_ = ?)
     OR (from_ = ? AND to_ = ?)
-    ORDER BY timestamp
     """
-    messages = SQL_CURSOR.execute(query, (user1, user2, user2, user1)).fetchall()
+    messages = sorted(SQL_CURSOR.execute(query, (user1, user2, user2, user1)).fetchall(), key=toDate)
     seed1 = int(SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (user1, )).fetchone()[3])
     seed2 = int(SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (user2, )).fetchone()[3])
 
