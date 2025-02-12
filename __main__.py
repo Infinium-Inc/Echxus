@@ -159,7 +159,8 @@ class Contacts(CTkScrollableFrame):
             fg_color="#373737",
             text=user,
             hover_color="#808080",
-            font=("JetBrains Mono Medium", 20)
+            font=("JetBrains Mono Medium", 20),
+            command=lambda user=user: frame.parent.parent.chat.open(user)
         )
         frame.loaded[user].pack(pady=5, fill="x", padx=2)
 
@@ -173,7 +174,8 @@ class Contacts(CTkScrollableFrame):
                 fg_color="#373737",
                 text=user,
                 hover_color="#808080",
-                font=("JetBrains Mono Medium", 20)
+                font=("JetBrains Mono Medium", 20),
+                command=lambda user=user: frame.parent.parent.chat.open(user)
             )
             frame.loaded[user].pack(pady=5, fill="x", padx=2)
 
@@ -187,6 +189,9 @@ class Chat(CTkFrame):
             bg_color="black"
         )
         chat.parent = master
+
+    def open(chat, chatName: str) -> None:
+        print(chatName)
 
 app = App(username)
 SQL.close()
