@@ -1,4 +1,6 @@
 from source import login, messaging, askUser
+from secrypto import decrypt
+from datetime import datetime
 if not login.username: exit()
 username = login.username
 
@@ -189,9 +191,129 @@ class Chat(CTkFrame):
             bg_color="black"
         )
         chat.parent = master
+        chat.password = decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username=?", (username, )).fetchone()[2], login.GLOBAL_KEY)
+        chat.chats = {}
 
     def open(chat, chatName: str) -> None:
-        print(chatName)
+        for chat_ in chat.chats.values():
+            chat_.pack_forget()
+
+        if chatName not in chat.chats:
+            chat.chats[chatName] = Opened(chat, chatName)
+
+        chat.chats[chatName].pack(expand=True, fill="both")
+
+class Opened(CTkFrame):
+
+    def __init__(opened, master: Chat, friend: str) -> None:
+        super().__init__(
+            master,
+            fg_color="#252526",
+            bg_color="#252525",
+            corner_radius=25
+        )
+        opened.parent = master
+        opened.friend = friend
+
+        opened.rowconfigure(0, weight=7, uniform="a")
+        opened.rowconfigure(1, weight=1, uniform="a")
+        opened.columnconfigure(0, weight=9, uniform="a")
+        opened.columnconfigure(1, weight=1, uniform="a")
+
+        opened.messages = Messages(opened, friend)
+        opened.messages.grid(row=0, column=0, sticky="nsew", padx=10, pady=10, columnspan=2)
+
+        opened.entryVar = StringVar()
+        opened.entryVar.trace("w", opened.writing)
+        opened.entry = CTkEntry(
+            opened,
+            font=("JetBrains Mono Medium", 20),
+            text_color="#cccccc",
+            fg_color="#323233",
+            corner_radius=10,
+            textvariable=opened.entryVar
+        )
+        opened.entry.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+        opened.startButton = CTkButton(
+            opened,
+            text="🏹",
+            font=("", 20),
+            hover_color="#1e1e1e",
+            fg_color="#252526",
+            border_color="#565b5e",
+            border_width=2,
+            command=opened.message,
+            state="disabled"
+        )
+        opened.startButton.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+
+    def writing(opened, *_) -> None:
+        opened.startButton.configure(state="normal" if opened.entryVar.get() else "disabled")
+
+    def message(opened) -> None:
+        opened.messages.message(opened.entryVar.get())
+        opened.entryVar.set("")
+
+class Messages(CTkScrollableFrame):
+
+    def __init__(messages, master: Opened, friend: str) -> None:
+        super().__init__(
+            master,
+            fg_color="#252526",
+            corner_radius=10,
+            border_color="#565b5e",
+            border_width=2,
+        )
+        messages.parent = master
+        messages.friend = friend
+
+        messages.columnconfigure(0, weight=1)  # Ensure the column takes full width
+        messages.load()
+
+    def message(messages, string: str) -> None:
+        messaging.send(username, string, messages.friend, messages.parent.parent.password)
+        Message(
+            messages,
+            f"{datetime.now().date()} {datetime.now().hour}:{datetime.now().minute}.{datetime.now().second}",
+            string,
+            "e"
+        ).pack(fill="x", padx=10, pady=5)
+
+    def load(messages):
+        for time, sender, message in messaging.get_messages(username+"-"+messages.friend, messages.parent.parent.password):
+            Message(
+                messages,
+                time,
+                message,
+                "e" if username==sender else "w"
+            ).pack(fill="x", padx=10, pady=10)
+
+class Message(CTkFrame):
+
+    def __init__(message, master: Messages, time: str, text: str, align: str) -> None:
+        super().__init__(
+            master,
+            fg_color="transparent"
+        )
+
+        message.timeLabel = CTkLabel(
+            message,
+            text=time,
+            font=("JetBrains Mono Light", 10),
+            wraplength=200,  # Adjust wraplength as needed
+            anchor="w" if align == "w" else "e"
+        )
+        message.timeLabel.pack(fill="x", padx=10)  # Reduced pady
+
+        message.textLabel = CTkLabel(
+            message,
+            text=text,
+            font=("JetBrains Mono Medium", 18),
+            wraplength=400,  # Adjust wraplength as needed
+            anchor="w" if align == "w" else "e"
+        )
+        message.textLabel.pack(fill="x", padx=10)  # Reduced pady
 
 app = App(username)
 SQL.close()
