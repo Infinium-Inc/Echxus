@@ -1,3 +1,5 @@
 .idea/
 __pycache__/
-binary/
+dist/
+build/
+Echxus.spec
