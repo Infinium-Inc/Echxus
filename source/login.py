@@ -5,6 +5,7 @@ from os import path, makedirs
 from sqlite3 import  Connection
 from secrypto import Key, encrypt, decrypt
 from random import randint
+from webbrowser import open as openWeb
 
 DIRECTORY = f"C:\\Users\\Public\\AppData\\Echxus"
 if not path.exists(DIRECTORY):
@@ -31,14 +32,26 @@ class App(CTk):
 
         root.title("Echxus | Login")
         root.iconbitmap(PATHS["favicon.ico"])
-        root.geometry("600x400")
+        root.geometry("600x440")
         root.resizable(False, False)
 
         change_border_color(root, "#2c2c2c")
         change_header_color(root, "#2c2c2c")
 
+        root.copyright = CTkFrame(root, width=400, height=20)
+        root.copyright.pack(side="bottom", pady=10)
+        root.copyright.pack_propagate(False)
+
+        root.copyrightLabel = CTkLabel(root.copyright, text="© 2025 Aahan Salecha, Infinium")
+        root.copyrightLabel.bind("<Button>", lambda: openWeb("https://github.com/Infinium-Inc/Echxus/blob/main/LICENSE.md"))
+        root.copyrightLabel.pack(side="left")
+
+        root.linkLabel = CTkLabel(root.copyright, text="Infinium-Inc/Echxus on GitHub")
+        root.linkLabel.bind("<Button>", lambda: openWeb("https://github.com/Infinium-Inc/Echxus"))
+        root.linkLabel.pack(side="right")
+
         root.authPage = AuthPage(root)
-        root.authPage.pack(fill="both", expand=True, padx=20, pady=20)
+        root.authPage.pack(fill="both", expand=True, padx=20, pady=20, side="bottom")
 
         root.mainloop()
 
