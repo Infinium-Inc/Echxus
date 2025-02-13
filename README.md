@@ -71,7 +71,7 @@ Echxus is licensed under the [**CC0 1.0 Universal**](https://github.com/Infinium
 Thanks to [JetBrains](https://github.com/JetBrains "JetBrains on GitHub"), for providing the [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) font.
 
 ## Python Modules
-Thanks to on the [modules](https://github.com/Infinium-Inc/Echxus/requirements.txt) on which Othello is built on.
+Thanks to on the [modules](https://github.com/Infinium-Inc/Echxus/blob/main/requirements.txt) on which Othello is built on.
 
 <br><br>
 <div align="center">
