@@ -43,11 +43,11 @@ class App(CTk):
         root.copyright.pack_propagate(False)
 
         root.copyrightLabel = CTkLabel(root.copyright, text="© 2025 Aahan Salecha, Infinium")
-        root.copyrightLabel.bind("<Button>", lambda: openWeb("https://github.com/Infinium-Inc/Echxus/blob/main/LICENSE.md"))
+        root.copyrightLabel.bind("<Button>", lambda _: openWeb("https://github.com/Infinium-Inc/Echxus/blob/main/LICENSE.md"))
         root.copyrightLabel.pack(side="left")
 
         root.linkLabel = CTkLabel(root.copyright, text="Infinium-Inc/Echxus on GitHub")
-        root.linkLabel.bind("<Button>", lambda: openWeb("https://github.com/Infinium-Inc/Echxus"))
+        root.linkLabel.bind("<Button>", lambda _: openWeb("https://github.com/Infinium-Inc/Echxus"))
         root.linkLabel.pack(side="right")
 
         root.authPage = AuthPage(root)

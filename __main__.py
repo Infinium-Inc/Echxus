@@ -8,7 +8,6 @@ from customtkinter import *
 from pywinstyles import *
 from sqlite3 import  Connection
 from ast import literal_eval
-import sys
 
 DIRECTORY = f"C:\\Users\\Public\\AppData\\Echxus"
 
@@ -16,7 +15,7 @@ SQL = Connection(DIRECTORY+"\\database.db")
 SQL_CURSOR = SQL.cursor()
 
 PATHS = {
-    "favicon.ico" : f"{sys._MEIPASS if hasattr(sys, "_MEIPASS") else DIRECTORY}\\assets\\icons\\favicon.ico",
+    "favicon.ico" : f"{DIRECTORY}\\assets\\icons\\favicon.ico",
 }
 
 class App(CTk):
