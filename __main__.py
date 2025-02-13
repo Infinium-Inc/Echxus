@@ -194,6 +194,13 @@ class Chat(CTkFrame):
         chat.password = decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username=?", (username, )).fetchone()[2], login.GLOBAL_KEY)
         chat.chats = {}
 
+        chat.header = CTkLabel(
+            chat,
+            text="No chat selected",
+            font=("JetBrains Mono Bold", 20)
+        )
+        chat.header.pack(pady=10)
+
     def open(chat, chatName: str) -> None:
         for chat_ in chat.chats.values():
             chat_.pack_forget()
@@ -202,6 +209,7 @@ class Chat(CTkFrame):
             chat.chats[chatName] = Opened(chat, chatName)
 
         chat.chats[chatName].pack(expand=True, fill="both")
+        chat.header.configure(text=chatName)
 
 class Opened(CTkFrame):
 
