@@ -1,9 +1,9 @@
 from source import login, messaging, askUser
-from secrypto import decrypt
-from datetime import datetime
 if not login.username: exit()
 username = login.username
 
+from secrypto import decrypt
+from datetime import datetime
 from customtkinter import *
 from pywinstyles import *
 from sqlite3 import  Connection
@@ -268,7 +268,6 @@ class Messages(CTkScrollableFrame):
         messages.parent = master
         messages.friend = friend
 
-        messages.columnconfigure(0, weight=1)  # Ensure the column takes full width
         messages.load()
 
     def message(messages, string: str) -> None:
@@ -301,19 +300,30 @@ class Message(CTkFrame):
             message,
             text=time,
             font=("JetBrains Mono Light", 10),
-            wraplength=200,  # Adjust wraplength as needed
             anchor="w" if align == "w" else "e"
         )
-        message.timeLabel.pack(fill="x", padx=10)  # Reduced pady
+        message.timeLabel.pack(fill="x", padx=10)
 
-        message.textLabel = CTkLabel(
-            message,
-            text=text,
-            font=("JetBrains Mono Medium", 18),
-            wraplength=400,  # Adjust wraplength as needed
-            anchor="w" if align == "w" else "e"
-        )
-        message.textLabel.pack(fill="x", padx=10)  # Reduced pady
+        if len(text) <= 294:
+            message.textLabel = CTkLabel(
+                message,
+                text=text,
+                font=("JetBrains Mono Medium", 18),
+                anchor="w" if align=="w" else "e",
+                wraplength=400,
+                justify="left" if align=="w" else "right"
+            )
+            message.textLabel.pack(fill="x", padx=10)
+        else:
+            message.textLabel = CTkTextbox(
+                message,
+                font=("JetBrains Mono Medium", 14),
+                wrap="word",
+                height=100
+            )
+            message.textLabel.insert("1.0", text)
+            message.textLabel.configure(state="disabled")
+            message.textLabel.pack(fill="x", padx=10, pady=5)
 
 app = App(username)
 SQL.close()
