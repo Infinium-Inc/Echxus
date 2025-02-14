@@ -2,12 +2,14 @@ from source import login
 if not login.username: exit()
 username = login.username
 
-from secrypto import decrypt
+from secrypto import decrypt, Key
 from datetime import datetime
 from customtkinter import *
 from pywinstyles import *
 from ast import literal_eval
-from source import askUser, messaging
+from threading import Thread
+
+from source import askUser, messaging, sync
 from source.GLOBAL import SQL_CURSOR, GLOBAL_SQL, PATHS, GLOBAL_KEY
 
 class App(CTk):
@@ -267,8 +269,12 @@ class Messages(CTkScrollableFrame):
         )
         messages.parent = master
         messages.friend = friend
+        messages.seed = Key(seed=int(SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (username, )).fetchone()[3]))
 
         messages.load()
+
+        messages.sync = Thread(target=lambda: sync.check_for_new_messages(username, messages.friend, messages.add), daemon=True)
+        messages.sync.start()
 
     def message(messages, string: str) -> None:
         messaging.send(username, string, messages.friend, messages.parent.parent.password)
@@ -277,6 +283,14 @@ class Messages(CTkScrollableFrame):
             f"{datetime.now().date()} {datetime.now().hour}:{datetime.now().minute}.{datetime.now().second}",
             string,
             "e"
+        ).pack(fill="x", padx=10, pady=5)
+
+    def add(messages, message):
+        Message(
+            messages,
+            message[0],
+            decrypt(message[2], messages.seed),
+            "w"
         ).pack(fill="x", padx=10, pady=5)
 
     def load(messages):

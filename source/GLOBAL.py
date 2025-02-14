@@ -11,10 +11,11 @@ if not exists(DIRECTORY):
     makedirs(DIRECTORY)
 
 PATHS = {
-    "favicon.ico" : DIRECTORY+"\\assets\\icons\\favicon.ico"
+    "favicon.ico" : DIRECTORY+"\\assets\\icons\\favicon.ico",
+    "database.db" : DIRECTORY+"\\database.db"
 }
 
-GLOBAL_SQL = connect(DIRECTORY+"\\database.db")
+GLOBAL_SQL = connect(PATHS["database.db"])
 GLOBAL_SQL.create_function("decrypt", 1, lambda x: decrypt(x, GLOBAL_KEY))
 GLOBAL_SQL.create_function("encrypt", 1, lambda x: encrypt(x, GLOBAL_KEY))
 
