@@ -1,4 +1,4 @@
-from source import login, messaging, askUser
+from source import login
 if not login.username: exit()
 username = login.username
 
@@ -6,17 +6,9 @@ from secrypto import decrypt
 from datetime import datetime
 from customtkinter import *
 from pywinstyles import *
-from sqlite3 import  Connection
 from ast import literal_eval
-
-DIRECTORY = f"C:\\Users\\Public\\AppData\\Echxus"
-
-SQL = Connection(DIRECTORY+"\\database.db")
-SQL_CURSOR = SQL.cursor()
-
-PATHS = {
-    "favicon.ico" : f"{DIRECTORY}\\assets\\icons\\favicon.ico",
-}
+from source import askUser, messaging
+from source.GLOBAL import SQL_CURSOR, GLOBAL_SQL, PATHS, GLOBAL_KEY
 
 class App(CTk):
 
@@ -167,7 +159,7 @@ class Contacts(CTkScrollableFrame):
         frame.loaded[user].pack(pady=5, fill="x", padx=2)
 
         SQL_CURSOR.execute("UPDATE Info SET friends=? WHERE username=?", (str(frame.friends), username))
-        SQL.commit()
+        GLOBAL_SQL.commit()
 
     def load(frame) -> None:
         for user in frame.friends:
@@ -191,7 +183,7 @@ class Chat(CTkFrame):
             bg_color="black"
         )
         chat.parent = master
-        chat.password = decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username=?", (username, )).fetchone()[2], login.GLOBAL_KEY)
+        chat.password = decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username=?", (username, )).fetchone()[2], GLOBAL_KEY)
         chat.chats = {}
 
         chat.header = CTkLabel(
@@ -334,4 +326,5 @@ class Message(CTkFrame):
             message.textLabel.pack(fill="x", padx=10, pady=5)
 
 app = App(username)
-SQL.close()
+
+GLOBAL_SQL.close()

@@ -1,24 +1,13 @@
-from sqlite3 import  Connection
 from secrypto import Key, encrypt, decrypt
-from os import path, makedirs
 from datetime import datetime
-
-DIRECTORY = f"C:\\Users\\Public\\AppData\\Echxus"
-if not path.exists(DIRECTORY):
-    makedirs(DIRECTORY)
-
-GLOBAL_KEY = Key(seed=4852572164214751712476216756)
-
-SQL = Connection(DIRECTORY+"\\database.db")
-SQL_CURSOR = SQL.cursor()
-SQL_CURSOR.execute("CREATE TABLE IF NOT EXISTS Messages (timestamp TEXT, from_ TEXT, message TEXT, to_ TEXT)")
+from GLOBAL import GLOBAL_KEY, SQL_CURSOR, GLOBAL_SQL
 
 def send(from_: str, message: str, to: str, fromPassword: str) -> None:
     if fromPassword != decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (from_, )).fetchone()[2], GLOBAL_KEY):
         return
     seed = SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (to, )).fetchone()[3]
     SQL_CURSOR.execute("INSERT INTO Messages (timestamp, from_, message, to_) VALUES (?, ?, ?, ?)", (f'{datetime.now().date()} {datetime.now().hour}:{datetime.now().minute}.{datetime.now().second}', from_, encrypt(message, Key(seed=int(seed))), to))
-    SQL.commit()
+    GLOBAL_SQL.commit()
 
 def get_messages(chat: str, password: str) -> list[str]:
     user1 = chat.split("-")[0]

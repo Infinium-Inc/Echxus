@@ -1,16 +1,7 @@
-from sqlite3 import  Connection
 from ast import literal_eval
 from customtkinter import *
 from pywinstyles import  *
-
-DIRECTORY = f"C:\\Users\\Public\\AppData\\Echxus"
-
-SQL = Connection(DIRECTORY+"\\database.db")
-SQL_CURSOR = SQL.cursor()
-
-PATHS = {
-    "favicon.ico" : f"{DIRECTORY}\\assets\\icons\\favicon.ico",
-}
+from GLOBAL import SQL_CURSOR, PATHS
 
 def getAvailable(user) -> set[str]:
     users = SQL_CURSOR.execute("SELECT username FROM Users").fetchall()
@@ -42,7 +33,7 @@ class Ask(CTkToplevel):
         change_border_color(branch, "#202020")
 
         branch.searchVar = StringVar()
-        branch.searchVar.trace_add("write", lambda *args: branch.update_user_list())
+        branch.searchVar.trace_add("write", lambda *_: branch.update_user_list())
         branch.searchBar = CTkEntry(
             branch,
             fg_color="#2c2c2c",

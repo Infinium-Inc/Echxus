@@ -1,28 +1,9 @@
 from customtkinter import *
 from pywinstyles import *
 from re import sub, match, search
-from os import path, makedirs
-from sqlite3 import  Connection
-from secrypto import Key, encrypt, decrypt
 from random import randint
 from webbrowser import open as openWeb
-
-DIRECTORY = f"C:\\Users\\Public\\AppData\\Echxus"
-if not path.exists(DIRECTORY):
-    makedirs(DIRECTORY)
-
-GLOBAL_KEY = Key(seed=4852572164214751712476216756)
-
-SQL = Connection(DIRECTORY+"\\database.db")
-SQL_CURSOR = SQL.cursor()
-SQL_CURSOR.execute("CREATE TABLE IF NOT EXISTS Users (username TEXT, name TEXT, password TEXT, seed TEXT)")
-SQL_CURSOR.execute("CREATE TABLE IF NOT EXISTS Info (username TEXT, friends TEXT)")
-SQL.create_function("decrypt", 1, lambda x: decrypt(x, GLOBAL_KEY))
-SQL.create_function("encrypt", 1, lambda x: encrypt(x, GLOBAL_KEY))
-
-PATHS = {
-    "favicon.ico" : f"{DIRECTORY}\\assets\\icons\\favicon.ico",
-}
+from GLOBAL import  SQL_CURSOR, GLOBAL_SQL, PATHS
 
 class App(CTk):
 
@@ -268,7 +249,7 @@ class RegisterPage(CTkFrame):
 
         SQL_CURSOR.execute("INSERT INTO Users (username, name, password, seed) VALUES (?, ENCRYPT(?), ENCRYPT(?), ?)", (username, name, password, str(randint(0, 459922447758524356182925764587827621141488840828118402656326161300092550814154169410974551151741342344127012866971685861569595974258231770341461580733108476599183294829765249938892584810534737088865661242776026257499024746623501990701475686532591213816507116638257415067490833048892511487438018462822612226031207223486691239618719240627962833176749553105880797007673090769950644282266010558827324359739061868337774780664998803820496086793746446790416139656857790517179354882587563230448301576931681807946837454087273822384100046281757923576878974402809990538991955149303112724632964067174923170858605452280648238843045014075953316851794855420797216585372331492741614580466419054737493490833569210739066705209720832000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000))))
         SQL_CURSOR.execute("INSERT INTO Info (username, friends) VALUES (?, ?)", (username, "[]"))
-        SQL.commit()
+        GLOBAL_SQL.commit()
 
         page.parent.finish(username)
 
@@ -374,6 +355,5 @@ class LoginPage(CTkFrame):
         page.notification.grid(row=3, column=0, sticky="nsew", padx=50, pady=15)
 
 app = App()
-SQL.close()
 
 username = app.user
