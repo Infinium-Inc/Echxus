@@ -348,26 +348,17 @@ class Message(CTkFrame):
         )
         message.timeLabel.pack(fill="x", padx=10)
 
-        if len(text) <= 294:
-            message.textLabel = CTkLabel(
-                message,
-                text=text,
-                font=("JetBrains Mono Medium", 18),
-                anchor="w" if align=="w" else "e",
-                wraplength=400,
-                justify="left" if align=="w" else "right"
-            )
-            message.textLabel.pack(fill="x", padx=10)
-        else:
-            message.textLabel = CTkTextbox(
-                message,
-                font=("JetBrains Mono Medium", 14),
-                wrap="word",
-                height=100
-            )
-            message.textLabel.insert("1.0", text)
-            message.textLabel.configure(state="disabled")
-            message.textLabel.pack(fill="x", padx=10, pady=5)
+        message.textLabel = CTkTextbox(
+            message,
+            font=("JetBrains Mono Medium", 18),
+            wrap="word",
+            height=130 if len(text) > 250 else 65,
+            state="normal",
+            width=400 if len(text) > 250 else 250
+        )
+        message.textLabel.insert("1.0", text)
+        message.textLabel.configure(state="disabled")
+        message.textLabel.pack(padx=10, pady=5, anchor=align)
 
 app = App(username)
 
