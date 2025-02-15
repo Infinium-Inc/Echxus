@@ -219,8 +219,10 @@ class Opened(CTkFrame):
 
         opened.rowconfigure(0, weight=7, uniform="a")
         opened.rowconfigure(1, weight=1, uniform="a")
-        opened.columnconfigure(0, weight=9, uniform="a")
+        opened.columnconfigure(0, weight=8, uniform="a")
         opened.columnconfigure(1, weight=1, uniform="a")
+
+        opened.loading = Loading(opened)
 
         opened.messages = Messages(opened, friend)
         opened.messages.grid(row=0, column=0, sticky="nsew", padx=10, pady=10, columnspan=2)
@@ -239,7 +241,7 @@ class Opened(CTkFrame):
 
         opened.startButton = CTkButton(
             opened,
-            text="🏹",
+            text="📤",
             font=("", 20),
             hover_color="#1e1e1e",
             fg_color="#252526",
@@ -256,6 +258,22 @@ class Opened(CTkFrame):
     def message(opened) -> None:
         opened.messages.message(opened.entryVar.get())
         opened.entryVar.set("")
+
+class Loading(CTkLabel):
+
+    def __init__(loading, master: Opened):
+        super().__init__(
+            master,
+            text="Loading...",
+            font=("JetBrains Mono Bold", 20),
+            fg_color="#252526",
+            text_color="#ffffff"
+        )
+        loading.grid_remove()  # Initially hide the loading screen
+
+    def load(loading):
+        loading.grid(row=0, column=0, sticky="nsew", padx=10, pady=10, columnspan=2)
+        loading.lift()
 
 class Messages(CTkScrollableFrame):
 
@@ -294,13 +312,25 @@ class Messages(CTkScrollableFrame):
         ).pack(fill="x", padx=10, pady=5)
 
     def load(messages):
-        for time, sender, message in messaging.get_messages(username+"-"+messages.friend, messages.parent.parent.password):
-            Message(
-                messages,
-                time,
-                message,
-                "e" if username==sender else "w"
-            ).pack(fill="x", padx=10, pady=10)
+        messages.parent.loading.load()
+        messages.update_idletasks()
+
+        loaded = set()
+
+        def load_messages():
+            for time, sender, message in messaging.get_messages(username+"-"+messages.friend, messages.parent.parent.password):
+                if time not in loaded:
+                    Message(
+                            messages,
+                            time,
+                            message,
+                            "e" if username==sender else "w"
+                        ).pack(fill="x", padx=10, pady=10)
+                    loaded.add(time)
+
+            messages.parent.after(0, messages.parent.loading.destroy)
+
+        Thread(target=load_messages, daemon=True).start()
 
 class Message(CTkFrame):
 

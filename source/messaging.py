@@ -1,6 +1,7 @@
 from secrypto import Key, encrypt, decrypt
 from datetime import datetime
-from GLOBAL import GLOBAL_KEY, SQL_CURSOR, GLOBAL_SQL
+from GLOBAL import GLOBAL_KEY, SQL_CURSOR, GLOBAL_SQL, PATHS
+from sqlite3 import connect
 
 def send(from_: str, message: str, to: str, fromPassword: str) -> None:
     if fromPassword != decrypt(SQL_CURSOR.execute("SELECT * FROM Users WHERE username = ?", (from_, )).fetchone()[2], GLOBAL_KEY):
@@ -10,6 +11,9 @@ def send(from_: str, message: str, to: str, fromPassword: str) -> None:
     GLOBAL_SQL.commit()
 
 def get_messages(chat: str, password: str) -> list[str]:
+    SQL = connect(PATHS["database.db"])
+    SQL_CURSOR = SQL.cursor()
+
     user1 = chat.split("-")[0]
     user2 = chat.split("-")[1]
 
