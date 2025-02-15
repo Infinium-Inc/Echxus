@@ -7,7 +7,8 @@ All the messages sent, passwords stored, etc. are stored locally and encrypted w
 
 | Version | Supported |
 |---------|-----------|
-| v1.0.0  | ✅         |
+| v1.0.0  | ❌         |
+| v2.0.0  | ✅         |
  
 ## Reporting a Vulnerability
 Make a new issue for reporting a vulnerability, or make a pull request if you manage to fix it.

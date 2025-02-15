@@ -38,18 +38,18 @@
 
 </div>
 
-1. Open the [**latest release**](https://github.com/Infinium-Inc/Echxus/releases/tag/v1.0.0 "v1.0.0").
+1. Open the [**latest release**](https://github.com/Infinium-Inc/Echxus/releases/tag/v2.0.0 "v2.0.0").
 
-2. Install the [`Source code`](https://github.com/Infinium-Inc/Echxus/archive/refs/tags/v1.0.0.zip "Source Code installation"). Or you can even install the executable. Try installing both the executables, use the one that works.
+2. Install the [`Source code`](https://github.com/Infinium-Inc/Echxus/archive/refs/tags/v2.0.0.zip "Source Code installation"). Or you can even install the executable. Try installing both the executables, use the one that works.
 
-3. Move the [**assets/**](https://github.com/Infinium-Inc/Echxus/tree/v1.0.0/assets) to the following folder: 
+3. Move the [**assets/**](https://github.com/Infinium-Inc/Echxus/tree/v2.0.0/assets) to the following folder: 
 `C:\Users\YOUR_USERNAME\AppData\Local\Echxus`.
 
-4. Keep the [**source/**](https://github.com/Infinium-Inc/Echxus/tree/v1.0.0/source) in the same directory as the `__main__.py`. (This step is not needed if you have installed an executable)
+4. Keep the [**source/**](https://github.com/Infinium-Inc/Echxus/tree/v2.0.0/source) in the same directory as the `__main__.py`. (This step is not needed if you have installed an executable)
 
-5. Install the needed [*requirements*](https://github.com/Infinium-Inc/Echxus/blob/v1.0.0/requirements.txt "requirements.txt"), with: `pip install -r requirements.txt`.
+5. Install the needed [*requirements*](https://github.com/Infinium-Inc/Echxus/blob/v2.0.0/requirements.txt "requirements.txt"), with: `pip install -r requirements.txt`.
 
-6. Run the [`__main__.py`](https://github.com/Infinium-Inc/Echxus/blob/v1.0.0/__main__.py "__main__.py"), which starts the app.
+6. Run the [`__main__.py`](https://github.com/Infinium-Inc/Echxus/blob/v2.0.0/__main__.py "__main__.py"), which starts the app.
 
 <br><br>
 <div align="center">
