@@ -269,7 +269,6 @@ class Loading(CTkLabel):
             fg_color="#252526",
             text_color="#ffffff"
         )
-        loading.grid_remove()  # Initially hide the loading screen
 
     def load(loading):
         loading.grid(row=0, column=0, sticky="nsew", padx=10, pady=10, columnspan=2)
