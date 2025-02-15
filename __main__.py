@@ -96,7 +96,8 @@ class Navigation(CTkFrame):
             fg_color="#2c2c2c",
             hover_color="#3a3a3a",
             font=("JetBrains Mono Bold", 20),
-            command=nav.contacts.append
+            command=nav.contacts.append,
+            text_color="#ffffff"
         )
         nav.newChat.place(relx=0.87, rely=0.04, anchor="center")
 
@@ -107,7 +108,8 @@ class Navigation(CTkFrame):
             fg_color="#2c2c2c",
             border_color="#3a3a3a",
             font=("JetBrains Mono Bold", 20),
-            textvariable=nav.searchVar
+            textvariable=nav.searchVar,
+            text_color="#ffffff"
         )
         nav.searchBar.place(relx=0.5, rely=0.11, anchor="center", relwidth=0.9)
 
@@ -123,7 +125,8 @@ class Navigation(CTkFrame):
                     fg_color="#373737",
                     text=user,
                     hover_color="#808080",
-                    font=("JetBrains Mono Medium", 20)
+                    font=("JetBrains Mono Medium", 20),
+                    text_color="#ffffff"
                 )
                 nav.contacts.loaded[user] = button
                 button.pack(pady=5, fill="x", padx=2)
@@ -156,7 +159,8 @@ class Contacts(CTkScrollableFrame):
             text=user,
             hover_color="#808080",
             font=("JetBrains Mono Medium", 20),
-            command=lambda user=user: frame.parent.parent.chat.open(user)
+            command=lambda user=user: frame.parent.parent.chat.open(user),
+            text_color="#ffffff"
         )
         frame.loaded[user].pack(pady=5, fill="x", padx=2)
 
@@ -171,7 +175,8 @@ class Contacts(CTkScrollableFrame):
                 text=user,
                 hover_color="#808080",
                 font=("JetBrains Mono Medium", 20),
-                command=lambda user=user: frame.parent.parent.chat.open(user)
+                command=lambda user=user: frame.parent.parent.chat.open(user),
+                text_color="#ffffff"
             )
             frame.loaded[user].pack(pady=5, fill="x", padx=2)
 
@@ -191,7 +196,8 @@ class Chat(CTkFrame):
         chat.header = CTkLabel(
             chat,
             text="No chat selected",
-            font=("JetBrains Mono Bold", 20)
+            font=("JetBrains Mono Bold", 20),
+            text_color="#ffffff"
         )
         chat.header.pack(pady=10)
 
@@ -248,14 +254,15 @@ class Opened(CTkFrame):
             border_color="#565b5e",
             border_width=2,
             command=opened.message,
-            state="disabled"
+            state="disabled",
+            text_color="#ffffff"
         )
         opened.startButton.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
 
     def writing(opened, *_) -> None:
         opened.startButton.configure(state="normal" if opened.entryVar.get() else "disabled")
 
-    def message(opened) -> None:
+    def message(opened, *_) -> None:
         opened.messages.message(opened.entryVar.get())
         opened.entryVar.set("")
 
@@ -343,17 +350,19 @@ class Message(CTkFrame):
             message,
             text=time,
             font=("JetBrains Mono Light", 10),
-            anchor="w" if align == "w" else "e"
+            anchor="w" if align == "w" else "e",
+            text_color="#ffffff"
         )
         message.timeLabel.pack(fill="x", padx=10)
 
         message.textLabel = CTkTextbox(
             message,
-            font=("JetBrains Mono Medium", 18),
-            wrap="word",
-            height=130 if len(text) > 250 else 65,
+            font=("JetBrains Mono Medium", 12 if len(text) > 250 else 16),
+            wrap="none" if len(text) > 250 else "word",
+            height=130 if len(text) > 250 else 40,
             state="normal",
-            width=400 if len(text) > 250 else 250
+            width=400 if len(text) > 250 else 250,
+            text_color="#ffffff"
         )
         message.textLabel.insert("1.0", text)
         message.textLabel.configure(state="disabled")

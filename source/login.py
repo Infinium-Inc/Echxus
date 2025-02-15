@@ -19,16 +19,30 @@ class App(CTk):
         change_border_color(root, "#2c2c2c")
         change_header_color(root, "#2c2c2c")
 
-        root.copyright = CTkFrame(root, width=400, height=20)
+        root.copyright = CTkFrame(root, width=450, height=20)
         root.copyright.pack(side="bottom", pady=10)
         root.copyright.pack_propagate(False)
 
-        root.copyrightLabel = CTkLabel(root.copyright, text="© 2025 Aahan Salecha, Infinium")
+        root.copyrightLabel = CTkLabel(
+            root.copyright,
+            text="© 2025 Aahan Salecha, Infinium",
+            font=("JetBrains Mono Light", 12),
+            text_color="#ffffff"
+        )
         root.copyrightLabel.bind("<Button>", lambda _: openWeb("https://github.com/Infinium-Inc/Echxus/blob/main/LICENSE.md"))
+        root.copyrightLabel.bind("<Enter>", lambda _: root.copyrightLabel.configure(fg_color="#202020"))
+        root.copyrightLabel.bind("<Leave>", lambda _: root.copyrightLabel.configure(fg_color="transparent"))
         root.copyrightLabel.pack(side="left")
 
-        root.linkLabel = CTkLabel(root.copyright, text="Infinium-Inc/Echxus on GitHub")
+        root.linkLabel = CTkLabel(
+            root.copyright,
+            text="Infinium-Inc/Echxus on GitHub",
+            font=("JetBrains Mono Light", 12),
+            text_color="#ffffff"
+        )
         root.linkLabel.bind("<Button>", lambda _: openWeb("https://github.com/Infinium-Inc/Echxus"))
+        root.linkLabel.bind("<Enter>", lambda _: root.linkLabel.configure(fg_color="#202020"))
+        root.linkLabel.bind("<Leave>", lambda _: root.linkLabel.configure(fg_color="transparent"))
         root.linkLabel.pack(side="right")
 
         root.authPage = AuthPage(root)
@@ -47,7 +61,7 @@ class AuthPage(CTkTabview):
             segmented_button_selected_hover_color="#333333",
             segmented_button_unselected_hover_color="#202020",
             segmented_button_unselected_color="#202020",
-            text_color="#878787",
+            text_color="#ffffff"
         )
 
         page.add("Login")
@@ -86,7 +100,8 @@ class RegisterPage(CTkFrame):
             page,
             fg_color="#202020",
             font=("JetBrains Mono Light", 20),
-            textvariable=page.usernameVar
+            textvariable=page.usernameVar,
+            text_color="#ffffff"
         )
         page.username.grid(row=1, column=0, sticky="nsew", padx=50, pady=15)
 
@@ -94,7 +109,8 @@ class RegisterPage(CTkFrame):
             page,
             text="Username ",
             fg_color="#202020",
-            font=("JetBrains Mono Light", 12)
+            font=("JetBrains Mono Light", 12),
+            text_color="#ffffff"
         )
         set_opacity(page.usernameTitle, color="#202020")
         page.usernameTitle.grid(row=1, column=0, sticky="nw", padx=47)
@@ -117,7 +133,8 @@ class RegisterPage(CTkFrame):
             fg_color="#202020",
             font=("JetBrains Mono Light", 20),
             textvariable=page.passwordVar,
-            show="•"
+            show="•",
+            text_color="#ffffff"
         )
         page.password.grid(row=2, column=0, sticky="nsew", padx=50, pady=15)
 
@@ -125,7 +142,8 @@ class RegisterPage(CTkFrame):
             page,
             text="Password ",
             fg_color="#202020",
-            font=("JetBrains Mono Light", 12)
+            font=("JetBrains Mono Light", 12),
+            text_color="#ffffff"
         )
         set_opacity(page.passwordTitle, color="#202020")
         page.passwordTitle.grid(row=2, column=0, sticky="nw", padx=47)
@@ -146,7 +164,8 @@ class RegisterPage(CTkFrame):
             text="🔒",
             fg_color="#202020",
             font=("JetBrains Mono Light", 15),
-            cursor="hand2"
+            cursor="hand2",
+            text_color="#ffffff"
         )
         page.passwordToggle.grid(row=2, column=0, sticky="e", padx=55)
         page.passwordToggle.bind("<Button-1>", page.passwordToggleClick)
@@ -158,6 +177,7 @@ class RegisterPage(CTkFrame):
             fg_color="#202020",
             font=("JetBrains Mono Light", 20),
             textvariable=page.nameVar,
+            text_color="#ffffff"
         )
         page.name.grid(row=3, column=0, sticky="nsew", padx=50, pady=15)
 
@@ -165,7 +185,8 @@ class RegisterPage(CTkFrame):
             page,
             text="Name (optional) ",
             fg_color="#202020",
-            font=("JetBrains Mono Light", 12)
+            font=("JetBrains Mono Light", 12),
+            text_color="#ffffff"
         )
         set_opacity(page.nameTitle, color="#202020")
         page.nameTitle.grid(row=3, column=0, sticky="nw", padx=47)
@@ -176,7 +197,8 @@ class RegisterPage(CTkFrame):
             fg_color="#202020",
             hover_color="#333333",
             font=("JetBrains Mono Bold", 25),
-            command=page.submitClick
+            command=page.submitClick,
+            text_color="#ffffff"
         )
         page.submit.grid(row=4, column=0)
 
@@ -270,12 +292,12 @@ class LoginPage(CTkFrame):
         page.columnconfigure(0, weight=1, uniform="a")
 
         page.usernameVar = StringVar()
-        # page.usernameVar.trace("w", page.usernameCorrect)
         page.username = CTkEntry(
             page,
             fg_color="#202020",
             font=("JetBrains Mono Light", 20),
-            textvariable=page.usernameVar
+            textvariable=page.usernameVar,
+            text_color="#ffffff"
         )
         page.username.grid(row=1, column=0, sticky="nsew", padx=50, pady=15)
 
@@ -283,7 +305,8 @@ class LoginPage(CTkFrame):
             page,
             text="Username ",
             fg_color="#202020",
-            font=("JetBrains Mono Light", 12)
+            font=("JetBrains Mono Light", 12),
+            text_color="#ffffff"
         )
         set_opacity(page.usernameTitle, color="#202020")
         page.usernameTitle.grid(row=1, column=0, sticky="nw", padx=47)
@@ -294,7 +317,8 @@ class LoginPage(CTkFrame):
             fg_color="#202020",
             font=("JetBrains Mono Light", 20),
             textvariable=page.passwordVar,
-            show="•"
+            show="•",
+            text_color="#ffffff"
         )
         page.password.grid(row=2, column=0, sticky="nsew", padx=50, pady=15)
 
@@ -302,7 +326,8 @@ class LoginPage(CTkFrame):
             page,
             text="Password ",
             fg_color="#202020",
-            font=("JetBrains Mono Light", 12)
+            font=("JetBrains Mono Light", 12),
+            text_color="#ffffff"
         )
         set_opacity(page.passwordTitle, color="#202020")
         page.passwordTitle.grid(row=2, column=0, sticky="nw", padx=47)
@@ -312,7 +337,8 @@ class LoginPage(CTkFrame):
             text="🔒",
             fg_color="#202020",
             font=("JetBrains Mono Light", 15),
-            cursor="hand2"
+            cursor="hand2",
+            text_color="#ffffff"
         )
         page.passwordToggle.grid(row=2, column=0, sticky="e", padx=55)
         page.passwordToggle.bind("<Button-1>", page.passwordToggleClick)
@@ -323,7 +349,8 @@ class LoginPage(CTkFrame):
             fg_color="#202020",
             hover_color="#333333",
             font=("JetBrains Mono Bold", 25),
-            command=page.submitClick
+            command=page.submitClick,
+            text_color="#ffffff"
         )
         page.submit.grid(row=4, column=0)
 
