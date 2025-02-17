@@ -1,7 +1,7 @@
 from ast import literal_eval
 from customtkinter import *
 from pywinstyles import  *
-from GLOBAL import SQL_CURSOR, PATHS
+from source.GLOBAL import SQL_CURSOR, PATHS
 
 def getAvailable(user) -> set[str]:
     users = SQL_CURSOR.execute("SELECT username FROM Users").fetchall()

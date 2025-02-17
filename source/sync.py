@@ -1,6 +1,6 @@
 import time
 from sqlite3 import connect
-from GLOBAL import PATHS
+from source.GLOBAL import PATHS
 from datetime import datetime
 
 def check_for_new_messages(username, friend, callback):

@@ -3,7 +3,7 @@ from pywinstyles import *
 from re import sub, match, search
 from random import randint
 from webbrowser import open as openWeb
-from GLOBAL import  SQL_CURSOR, GLOBAL_SQL, PATHS
+from source.GLOBAL import  SQL_CURSOR, GLOBAL_SQL, PATHS
 
 class App(CTk):
 

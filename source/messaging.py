@@ -1,6 +1,6 @@
 from secrypto import Key, encrypt, decrypt
 from datetime import datetime
-from GLOBAL import GLOBAL_KEY, SQL_CURSOR, GLOBAL_SQL, PATHS
+from source.GLOBAL import GLOBAL_KEY, SQL_CURSOR, GLOBAL_SQL, PATHS
 from sqlite3 import connect
 
 def send(from_: str, message: str, to: str, fromPassword: str) -> None:
