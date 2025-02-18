@@ -14,6 +14,7 @@
 # **`Contents`**
 </div>
 
+* [**`Disclaimer`**](https://github.com/Infinium-Inc/Echxus?tab=readme-ov-file#Disclaimer)
 * [**`Status`**](https://github.com/Infinium-Inc/Echxus?tab=readme-ov-file#status)
 * [**`Installation`**](https://github.com/Infinium-Inc/Echxus?tab=readme-ov-file#installation)
 * [**`License`**](https://github.com/Infinium-Inc/Echxus?tab=readme-ov-file#license)
@@ -25,11 +26,20 @@
 <br><br>
 <div align="center">
 
+# **`Disclaimer`**
+</div>
+
+> [!WARNING]
+> Echxus is for educational purposes only. The developers aren't responsible for misuse or problems caused by this app. The user of the app is solely responsible for any damages and/or misuse caused.
+
+<br><br>
+<div align="center">
+
 # **`Status`**
 </div>
 
 > [!IMPORTANT]
-> **Echxus** is currently only for windows, it may work for other operating systems after some changes, but it may not work as intended.
+> **Echxus** is currently only for Anand Niketan Satellite (More specifically servers running on same windows.), it may work for other servers after some changes, but it may not work as intended.
 
 <br><br>
 <div align="center">
