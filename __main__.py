@@ -362,7 +362,8 @@ class Message(CTkFrame):
             height=130 if len(text) > 250 else 40,
             state="normal",
             width=400 if len(text) > 250 else 250,
-            text_color="#ffffff"
+            text_color="#ffffff",
+            fg_color="#1d1e1e"
         )
         message.textLabel.insert("1.0", text)
         message.textLabel.configure(state="disabled")
