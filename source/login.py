@@ -25,22 +25,22 @@ class App(CTk):
 
         root.copyrightLabel = CTkLabel(
             root.copyright,
-            text="© 2025 Aahan Salecha, Infinium",
+            text="© 2025 Aahan Salecha",
             font=("JetBrains Mono Light", 12),
             text_color="#ffffff"
         )
-        root.copyrightLabel.bind("<Button>", lambda _: openWeb("https://github.com/Infinium-Inc/Echxus/blob/main/LICENSE.md"))
+        root.copyrightLabel.bind("<Button>", lambda _: openWeb("https://github.com/aahan0511/Echxus/blob/main/LICENSE.md"))
         root.copyrightLabel.bind("<Enter>", lambda _: root.copyrightLabel.configure(fg_color="#202020"))
         root.copyrightLabel.bind("<Leave>", lambda _: root.copyrightLabel.configure(fg_color="transparent"))
         root.copyrightLabel.pack(side="left")
 
         root.linkLabel = CTkLabel(
             root.copyright,
-            text="Infinium-Inc/Echxus on GitHub",
+            text="aahan0511/Echxus on GitHub",
             font=("JetBrains Mono Light", 12),
             text_color="#ffffff"
         )
-        root.linkLabel.bind("<Button>", lambda _: openWeb("https://github.com/Infinium-Inc/Echxus"))
+        root.linkLabel.bind("<Button>", lambda _: openWeb("https://github.com/aahan0511/Echxus"))
         root.linkLabel.bind("<Enter>", lambda _: root.linkLabel.configure(fg_color="#202020"))
         root.linkLabel.bind("<Leave>", lambda _: root.linkLabel.configure(fg_color="transparent"))
         root.linkLabel.pack(side="right")

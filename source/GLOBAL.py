@@ -4,7 +4,7 @@ from os import makedirs
 from sqlite3 import connect
 from pyglet import options, font
 
-__seed = 4852572164214751712476216756
+__seed = 5847548793894793
 GLOBAL_KEY = Key(seed=__seed)
 
 DIRECTORY = "C:\\Users\\Public\\AppData\\Echxus"
